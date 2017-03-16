@@ -14,8 +14,11 @@ module WOFF
       font_with_metadata(licensee: name, license_id: id)
     end
 
+    def metadata_xml
+      data.metadata.length > 0 ? compressor.inflate(data.metadata) : default_metadata
+    end
+    
     def font_with_metadata(licensee: nil, license_id: nil, license_text: nil, description: nil)
-      metadata_xml = data.metadata.length > 0 ? compressor.inflate(data.metadata) : default_metadata
       metadata_doc = REXML::Document.new(metadata_xml)
 
       if licensee
